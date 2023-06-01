@@ -11,9 +11,9 @@ class OrderController extends Controller
     protected $repository;
 
     protected array $validators = [
-        'name' => 'required|string|max:255',
-        'price' => 'required|regex:/^\d{1,13}(\.\d{1,4})?$/',
-        'photo' => 'required|string',
+        'client_code' => 'required|integer',
+        'product_code' => 'required|integer',
+
     ];
 
     /**

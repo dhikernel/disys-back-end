@@ -19,9 +19,8 @@ class Order extends Model
     public const PRIMARY_KEY = 'id';
 
     public const FILLABLE = [
-        'name',
-        'price',
-        'photo',
+        'client_code',
+        'product_code',
     ];
 
     public $fillable = self::FILLABLE;
