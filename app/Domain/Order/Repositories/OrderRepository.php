@@ -4,8 +4,10 @@ declare(strict_types=1);
 
 namespace App\Domain\Order\Repositories;
 
+use App\Domain\Client\Models\Client;
 use App\Domain\Order\Models\Order;
 use App\Domain\Order\Resources\OrderCollection;
+use App\Domain\Order\Services\SendEmail;
 use App\Domain\Order\Support\OrderRelationships;
 use Exception;
 use Illuminate\Support\Facades\DB;
@@ -17,6 +19,10 @@ use Spatie\QueryBuilder\QueryBuilder;
  */
 class OrderRepository
 {
+    protected Order $loadClients;
+
+    protected $endEmailToClient;
+
     public function __construct(OrderRelationships $orderRelationships)
     {
         $this->orderRelationships = $orderRelationships;
@@ -38,12 +44,27 @@ class OrderRepository
         return $resultOrderCollection->resource;
     }
 
-    public function store(array $request): Order
+    public function store(array $request)
     {
         try {
             DB::beginTransaction();
 
             $createdClient = Order::create($request);
+
+            $loadClients = Order::where('id', $request['client_code'])->first();
+
+            $client = null;
+
+            if ($loadClients) {
+
+                $client = $loadClients->load([
+                    'client' => function ($query) {
+                        $query->select(['id', 'name', 'email', 'phone', 'birth_date', 'address', 'complement', 'neighborhood', 'zip_code']);
+                    },
+                ])->toArray();
+            }
+
+            (new SendEmail())->sendEmailToClient($client);
 
             DB::commit();
         } catch (\Exception $exception) {
