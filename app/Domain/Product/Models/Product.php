@@ -19,6 +19,7 @@ class Product extends Model
     public const PRIMARY_KEY = 'id';
 
     public const FILLABLE = [
+        'code',
         'name',
         'price',
         'photo',
