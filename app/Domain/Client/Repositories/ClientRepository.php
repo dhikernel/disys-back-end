@@ -5,14 +5,37 @@ declare(strict_types=1);
 namespace App\Domain\Client\Repositories;
 
 use App\Domain\Client\Models\Client;
+use App\Domain\Client\Resources\ClientCollection;
 use Exception;
 use Illuminate\Support\Facades\DB;
-
+use Spatie\QueryBuilder\AllowedFilter;
+use Spatie\QueryBuilder\QueryBuilder;
 class ClientRepository
 {
+    private array $relationships;
+
+    public function __construct()
+    {
+        $this->relationships = [
+            'order',
+        ];
+    }
+
     public function index()
     {
-        return Client::orderBy('id')->get();
+        $query = Client::with($this->relationships);
+
+        $query = QueryBuilder::for($query)
+            ->allowedFilters([
+                AllowedFilter::partial('client_name', 'name'),
+            ])
+            ->defaultSort('created_at')
+            ->paginate(request('per_page', config('settings.AMOUNT_PAGINATE_DEFAULT')))
+            ->appends(request()->query());
+
+        $returnClientCollection = new ClientCollection($query);
+
+        return $returnClientCollection->resource;
     }
 
     public function store(array $request): Client

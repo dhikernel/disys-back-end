@@ -5,14 +5,37 @@ declare(strict_types=1);
 namespace App\Domain\Order\Repositories;
 
 use App\Domain\Order\Models\Order;
+use App\Domain\Order\Resources\OrderCollection;
+use App\Domain\Order\Support\OrderRelationships;
 use Exception;
 use Illuminate\Support\Facades\DB;
+use Spatie\QueryBuilder\AllowedFilter;
+use Spatie\QueryBuilder\QueryBuilder;
 
+/**
+ * @property OrderRelationships $orderRelationships
+ */
 class OrderRepository
 {
+    public function __construct(OrderRelationships $orderRelationships)
+    {
+        $this->orderRelationships = $orderRelationships;
+    }
     public function index()
     {
-        return Order::orderBy('id')->get();
+        $query = Order::with((new OrderRelationships())->get());
+
+        $result = QueryBuilder::for($query)
+            ->allowedFilters([
+                AllowedFilter::partial('product_name', 'product.name'),
+            ])
+            ->defaultSort('-created_at')
+            ->paginate(request('per_page', config('settings.AMOUNT_PAGINATE_DEFAULT')))
+            ->appends(request()->query());
+
+        $resultOrderCollection = new OrderCollection($result);
+
+        return $resultOrderCollection->resource;
     }
 
     public function store(array $request): Order
