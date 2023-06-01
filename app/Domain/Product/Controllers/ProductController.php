@@ -13,6 +13,7 @@ class ProductController extends Controller
     protected $repository;
 
     protected array $validators = [
+        'code' => 'required|integer',
         'name' => 'required|string|max:255',
         'price' => 'required|regex:/^\d{1,13}(\.\d{1,4})?$/',
         'photo' => 'required|string',
