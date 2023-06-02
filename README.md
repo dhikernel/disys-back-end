@@ -114,3 +114,8 @@ php artisan test
 ```shell
 php artisan db:seed
 ```
+10. to send the request it is necessary to generate a token through the login route passing email and password
+
+## api/auth/login
+
+
