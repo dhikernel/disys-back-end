@@ -1,0 +1,10 @@
+### Get All Books
+GET http://disys.test/api/clients/list
+Accept: application/json
+Authorization: Bearer 2|B79clU3VmPASb6lMjTVxMmBSniYW5FFNvKXm8F1s
+
+
+### Example using query builder filter
+GET http://disys.test/api/clients/list?filter[id]=jhon
+Accept: application/json
+Authorization: Bearer 2|B79clU3VmPASb6lMjTVxMmBSniYW5FFNvKXm8F1s
