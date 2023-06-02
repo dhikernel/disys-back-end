@@ -108,3 +108,9 @@ php artisan serve
 ```shell
 php artisan test
 ```
+
+9. To run the factory clients use the command
+
+```shell
+php artisan db:seed
+```
