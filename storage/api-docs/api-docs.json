@@ -31,6 +31,134 @@
                     }
                 ]
             }
+        },
+        "/api/clients/create": {
+            "post": {
+                "tags": [
+                    "Client - Create Client"
+                ],
+                "summary": "Create Record",
+                "description": "Create Record",
+                "operationId": "d586bf5538aa3a80d59bd480722ed29d",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "example": {
+                                    "name": "1",
+                                    "email": "diego.pereira26@gmail.com",
+                                    "phone": "11 99999-9999",
+                                    "birth_date": "1988-07-26",
+                                    "address": "Test endereço",
+                                    "complement": "Test complemento",
+                                    "neighborhood": "Test Bairro",
+                                    "zip_code": "67145007"
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Success"
+                    },
+                    "default": {
+                        "description": "Unidentified error"
+                    }
+                },
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
+            }
+        },
+        "/api/clients/update/{id}": {
+            "put": {
+                "tags": [
+                    "Client - Update Client"
+                ],
+                "summary": "Update Record",
+                "description": "Update Record",
+                "operationId": "13fc8ca970d37de7898157f464d8ea1a",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "example": {
+                                    "name": "1",
+                                    "email": "diego.pereira26@gmail.com",
+                                    "phone": "11 99999-9999",
+                                    "birth_date": "1988-07-26",
+                                    "address": "Test endereço",
+                                    "complement": "Test complemento",
+                                    "neighborhood": "Test Bairro",
+                                    "zip_code": "67145007"
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    },
+                    "default": {
+                        "description": "Unidentified error"
+                    }
+                },
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
+            }
+        },
+        "/api/clients/delete/{id}": {
+            "delete": {
+                "tags": [
+                    "Client - Delete Client"
+                ],
+                "summary": "Delete Record",
+                "description": "Delete Record",
+                "operationId": "61083c5678ff9dfa7220ef8da95442c2",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Success"
+                    },
+                    "default": {
+                        "description": "Unidentified error"
+                    }
+                },
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
+            }
         }
     },
     "components": {
