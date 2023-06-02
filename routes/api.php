@@ -1,35 +1,59 @@
 <?php
-
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Auth\Api\LoginController;
+use App\Http\Controllers\Auth\Api\RegisterController;
 use App\Domain\Client\Controllers\ClientController;
 use App\Domain\Order\Controllers\OrderController;
 use App\Domain\Product\Controllers\ProductController;
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
+// Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+//     return $request->user();
+// });
 
-    Route::get('/list-clients', [ClientController::class, 'index']);
+    Route::prefix('auth')->group(function () {
 
-    Route::post('/create-client', [ClientController::class, 'store']);
+        Route::get('/user', [LoginController::class, 'user'])->middleware('auth:sanctum');
 
-    Route::put('/update-client/{id}', [ClientController::class, 'update']);
+        Route::post('/login', [LoginController::class, 'login']);
 
-    Route::delete('/delete-client/{id}', [ClientController::class, 'destroy']);
+        Route::post('/logout', [LoginController::class, 'logout'])->middleware('auth:sanctum');
 
-    Route::get('/list-orders', [OrderController::class, 'index']);
+        Route::post('/register', [RegisterController::class, 'register']);
 
-    Route::post('/create-order', [OrderController::class, 'store']);
+    });
 
-    Route::put('/update-order/{id}', [OrderController::class, 'update']);
+    Route::prefix('clients')->group(function () {
 
-    Route::delete('/delete-order/{id}', [OrderController::class, 'destroy']);
+        Route::get('/list', [ClientController::class, 'index'])->middleware('auth:sanctum');
 
-    Route::get('/list-products', [ProductController::class, 'index']);
+        Route::post('/create', [ClientController::class, 'store'])->middleware('auth:sanctum');
 
-    Route::post('/create-product', [ProductController::class, 'store']);
+        Route::put('/update/{id}', [ClientController::class, 'update'])->middleware('auth:sanctum');
 
-    Route::put('/update-product/{id}', [ProductController::class, 'update']);
+        Route::delete('/delete/{id}', [ClientController::class, 'destroy'])->middleware('auth:sanctum');
+    });
 
-    Route::delete('/delete-product/{id}', [ProductController::class, 'destroy']);
+    Route::prefix('orders')->group(function () {
+
+        Route::get('/list', [OrderController::class, 'index'])->middleware('auth:sanctum');
+
+        Route::post('/create', [OrderController::class, 'store'])->middleware('auth:sanctum');
+
+        Route::put('/update/{id}', [OrderController::class, 'update'])->middleware('auth:sanctum');
+
+        Route::delete('/delete/{id}', [OrderController::class, 'destroy'])->middleware('auth:sanctum');
+
+    });
+
+    Route::prefix('products')->group(function () {
+
+        Route::get('/list', [ProductController::class, 'index'])->middleware('auth:sanctum');
+
+        Route::post('/create', [ProductController::class, 'store'])->middleware('auth:sanctum');
+
+        Route::put('/update/{id}', [ProductController::class, 'update'])->middleware('auth:sanctum');
+
+        Route::delete('/delete/{id}', [ProductController::class, 'destroy'])->middleware('auth:sanctum');
+
+    });
