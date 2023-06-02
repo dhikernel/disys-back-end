@@ -159,6 +159,288 @@
                     }
                 ]
             }
+        },
+        "/api/orders/list": {
+            "get": {
+                "tags": [
+                    "Order - List All Orders"
+                ],
+                "summary": "List All Orders",
+                "description": "List All Orders",
+                "operationId": "bc13559e51a011eab874e734eaa52a78",
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    },
+                    "default": {
+                        "description": "Unidentified error"
+                    }
+                },
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
+            }
+        },
+        "/api/orders/create": {
+            "post": {
+                "tags": [
+                    "Order - Create Order"
+                ],
+                "summary": "Create Record",
+                "description": "Create Record",
+                "operationId": "b538f280065f3df8a0fe869af535d45f",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "example": {
+                                    "client_code": 1,
+                                    "product_code": 1
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Success"
+                    },
+                    "default": {
+                        "description": "Unidentified error"
+                    }
+                },
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
+            }
+        },
+        "/api/orders/update/{id}": {
+            "put": {
+                "tags": [
+                    "Order - Update Order"
+                ],
+                "summary": "Update Record",
+                "description": "Update Record",
+                "operationId": "1b8fd4aed96ac16c03c88ec1aea1f057",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "example": {
+                                    "client_code": 7,
+                                    "product_code": 7
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    },
+                    "default": {
+                        "description": "Unidentified error"
+                    }
+                },
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
+            }
+        },
+        "/api/orders/delete/{id}": {
+            "delete": {
+                "tags": [
+                    "Order - Delete Order"
+                ],
+                "summary": "Delete Record",
+                "description": "Delete Record",
+                "operationId": "976a329ac23297b992edf13bce855a4f",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Success"
+                    },
+                    "default": {
+                        "description": "Unidentified error"
+                    }
+                },
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
+            }
+        },
+        "/api/products/list": {
+            "get": {
+                "tags": [
+                    "Product - List All Products"
+                ],
+                "summary": "List All Product",
+                "description": "List All Products",
+                "operationId": "517076312c44ffa4224def32118bbefb",
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    },
+                    "default": {
+                        "description": "Unidentified error"
+                    }
+                },
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
+            }
+        },
+        "/api/products/create": {
+            "post": {
+                "tags": [
+                    "Product - Create Product"
+                ],
+                "summary": "Create Record",
+                "description": "Create Record",
+                "operationId": "a2c98ad7c0b498cc7bb6768eb92292bc",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "example": {
+                                    "code": 5,
+                                    "name": "Pastel Chocolate",
+                                    "price": 11.5,
+                                    "photo": "https://www.site.com/new-chocolate.jpg"
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Success"
+                    },
+                    "default": {
+                        "description": "Unidentified error"
+                    }
+                },
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
+            }
+        },
+        "/api/products/update/{id}": {
+            "put": {
+                "tags": [
+                    "Product - Update Product"
+                ],
+                "summary": "Update Record",
+                "description": "Update Record",
+                "operationId": "df620469ab85285364ae7c742233773b",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "example": {
+                                    "code": 7,
+                                    "name": "Pastel Chocolate",
+                                    "price": 10.8,
+                                    "photo": "https://www.site.com/new-pastel-chocolate.jpg"
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    },
+                    "default": {
+                        "description": "Unidentified error"
+                    }
+                },
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
+            }
+        },
+        "/api/products/delete/{id}": {
+            "delete": {
+                "tags": [
+                    "Product - Delete Product"
+                ],
+                "summary": "Delete Record",
+                "description": "Delete Record",
+                "operationId": "978b7009f59deeeea214e8f47033e37a",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Success"
+                    },
+                    "default": {
+                        "description": "Unidentified error"
+                    }
+                },
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
+            }
         }
     },
     "components": {

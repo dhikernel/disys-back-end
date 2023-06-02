@@ -81,13 +81,12 @@ class ClientController extends Controller
      * )
      */
 
-
     public function store(Request $request)
     {
         return parent::store($request);
     }
 
-        /**
+    /**
      * @OA\Put(
      * tags={"Client - Update Client"},
      * path="/api/clients/update/{id}",
