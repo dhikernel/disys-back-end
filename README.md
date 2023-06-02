@@ -120,15 +120,6 @@ php artisan db:seed
 
 11. For sending email I used mailtrap, configure the environment variables
 
-## MAIL_MAILER=smtp
-## MAIL_HOST=sandbox.smtp.mailtrap.io
-## MAIL_PORT=2525
-## MAIL_USERNAME=977accd1ca0fd4
-## MAIL_PASSWORD=9bd188706521a1
-## MAIL_ENCRYPTION=tls
-## MAIL_FROM_ADDRESS=youremail@gmail.com
-## MAIL_FROM_NAME="${APP_NAME}"
-
 ```shell
 MAIL_MAILER=smtp
 MAIL_HOST=sandbox.smtp.mailtrap.io
