@@ -444,6 +444,80 @@
         }
     },
     "components": {
+        "schemas": {
+            "Client": {
+                "properties": {
+                    "name": {
+                        "description": "client name",
+                        "type": "string"
+                    },
+                    "email": {
+                        "description": "client email",
+                        "type": "string"
+                    },
+                    "phone": {
+                        "description": "client phone",
+                        "type": "string"
+                    },
+                    "birth_date": {
+                        "description": "client birth_date",
+                        "type": "string",
+                        "format": "date"
+                    },
+                    "address": {
+                        "description": "client address",
+                        "type": "string"
+                    },
+                    "complement": {
+                        "description": "client complement",
+                        "type": "string"
+                    },
+                    "neighborhood": {
+                        "description": "client neighborhood",
+                        "type": "string"
+                    },
+                    "zip_code": {
+                        "description": "client zip_code",
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            },
+            "Order": {
+                "properties": {
+                    "client_code": {
+                        "description": "client code",
+                        "type": "integer"
+                    },
+                    "product_code": {
+                        "description": "product code",
+                        "type": "integer"
+                    }
+                },
+                "type": "object"
+            },
+            "Product": {
+                "properties": {
+                    "code": {
+                        "description": "Product Code",
+                        "type": "integer"
+                    },
+                    "names": {
+                        "description": "Product name",
+                        "type": "string"
+                    },
+                    "price": {
+                        "description": "Product price",
+                        "type": "decimal"
+                    },
+                    "photo": {
+                        "description": "Product photo",
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            }
+        },
         "securitySchemes": {
             "bearer": {
                 "type": "http",

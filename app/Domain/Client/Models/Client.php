@@ -9,6 +9,20 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
+/**
+ * @OA\Schema(
+ *
+ * @OA\Property(property="name", type="string", description="client name"),
+ * @OA\Property(property="email", type="string", description="client email"),
+ * @OA\Property(property="phone", type="string", description="client phone"),
+ * @OA\Property(property="birth_date", type="date", description="client birth_date"),
+ * @OA\Property(property="address", type="string", description="client address"),
+ * @OA\Property(property="complement", type="string", description="client complement"),
+ * @OA\Property(property="neighborhood", type="string", description="client neighborhood"),
+ * @OA\Property(property="zip_code", type="string", description="client zip_code"),
+ * )
+ * Class Client
+ */
 
 class Client extends Model
 {
