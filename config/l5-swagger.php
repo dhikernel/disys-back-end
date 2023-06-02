@@ -5,7 +5,7 @@ return [
     'documentations' => [
         'default' => [
             'api' => [
-                'title' => 'L5 Swagger UI - Cosmos - Gente&Gestão',
+                'title' => 'L5 Swagger UI - Disys',
             ],
 
             'routes' => [
