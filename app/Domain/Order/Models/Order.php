@@ -11,6 +11,14 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
+/**
+ * @OA\Schema(
+ *
+ * @OA\Property(property="client_code", type="integer", description="client code"),
+ * @OA\Property(property="product_code", type="integer", description="product code")
+ * )
+ * Class Order
+ */
 
 class Order extends Model
 {
