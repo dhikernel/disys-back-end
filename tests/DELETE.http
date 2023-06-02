@@ -1,0 +1,5 @@
+### Delete Book
+DELETE http://disys.test/api/clients/delete/10
+content-type: application/json
+Accept: application/json
+Authorization: Bearer 2|B79clU3VmPASb6lMjTVxMmBSniYW5FFNvKXm8F1s
