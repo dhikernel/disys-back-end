@@ -1,0 +1,47 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Disys - API reference",
+        "description": "Documentation of each EndPoint for integration.",
+        "contact": {
+            "email": "dhipereira21@gmail.com"
+        },
+        "version": "1.0.0"
+    },
+    "paths": {
+        "/api/clients/list": {
+            "get": {
+                "tags": [
+                    "Client - List All Clients"
+                ],
+                "summary": "List All Clients",
+                "description": "List All Clients",
+                "operationId": "3fe9781e44825ae9116dd507d0c222aa",
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    },
+                    "default": {
+                        "description": "Unidentified error"
+                    }
+                },
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
+            }
+        }
+    },
+    "components": {
+        "securitySchemes": {
+            "bearer": {
+                "type": "http",
+                "description": "Authorization token obtained from logging in.",
+                "name": "Authorization",
+                "in": "header",
+                "scheme": "bearer"
+            }
+        }
+    }
+}
