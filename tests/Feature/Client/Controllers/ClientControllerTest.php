@@ -17,6 +17,8 @@ class ClientControllerTest extends TestCase
 
     protected $client;
 
+    protected $route;
+
     public function setUp(): void
     {
         parent::setUp();
