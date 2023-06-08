@@ -109,6 +109,16 @@ php artisan serve
 php artisan test
 ```
 
+Or to filter a class
+
+```shell
+php artisan test --filter OrderControllerTest
+```
+Or to filter a method
+
+```shell
+php artisan test --filter OrderControllerTest::testStore
+```
 9. To run the factory clients use the command
 
 ```shell
@@ -130,3 +140,44 @@ MAIL_ENCRYPTION=tls
 MAIL_FROM_ADDRESS=youremail@gmail.com
 MAIL_FROM_NAME="${APP_NAME}"
 ```
+12. About the docker implementation added to the project
+
+12.1 run the command in the root directory of the project:
+
+```shell
+docker composer build --no-cache
+```
+to build PHP, Nginx and Mysql images
+
+12.2 Após terminar a build das imagens, execute o comando:
+
+```shell
+docker compose up -d
+```
+to upload project containers
+
+12.3 After lifting the infrastructure, run:
+
+```shell
+docker compose exec app bash
+```
+to enter the application container
+
+12.4 Inside the container run the command:
+
+```shell
+composer install
+```
+12.5 to access the MySQL database run the command:
+
+```shell
+docker compose exec db bash
+```
+
+inside the container you will be able to access the mysql database example:
+```shell
+mysql -h localhost -u root -p
+```
+password: root
+
+You can configure a client too.
