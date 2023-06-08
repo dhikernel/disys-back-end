@@ -149,7 +149,7 @@ docker composer build --no-cache
 ```
 to build PHP, Nginx and Mysql images
 
-12.2 Após terminar a build das imagens, execute o comando:
+12.2 After finishing building the images, run the command:
 
 ```shell
 docker compose up -d
