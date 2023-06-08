@@ -22,8 +22,8 @@ class OrderFactory extends Factory
     public function definition(): array
     {
         return [
-            'client_code' => 2,
-            'product_code' => 2,
+            'client_code' => 1,
+            'product_code' => 1,
         ];
     }
 }
