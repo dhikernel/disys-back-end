@@ -86,7 +86,7 @@ class OrderRepository
     {
         $updateClient = Order::find($id);
 
-        return $updateClient->fill($data)->save();
+        return $updateClient->update($data);
     }
 
     public function destroy(int $id): bool

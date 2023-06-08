@@ -1,42 +1,50 @@
 <?php
 
-namespace Tests\Feature\Client\Controllers;
+namespace Tests\Feature\Order\Controllers;
 
 use App\Domain\Client\Models\Client;
+use App\Domain\Order\Models\Order;
 use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Tests\TestCase;
 use Symfony\Component\HttpFoundation\Response;
 
-class ClientControllerTest extends TestCase
+class OrderControllerTest extends TestCase
 {
-    protected $repository;
-
-    protected $dataClient;
-
     use WithoutMiddleware;
 
-    protected $client;
-
-    protected $route;
+    protected $repository, $dataOrder, $dataClient, $order, $client, $route;
 
     public function setUp(): void
     {
         parent::setUp();
         $this->withoutMiddleware();
-        $this->route       = '/api/clients/';
+        $this->route       = '/api/orders/';
+        $this->dataOrder = Order::factory();
         $this->dataClient = Client::factory();
     }
 
     private function prepareEnvironment(): void
     {
+        $this->order = Order::factory()->create()->toArray();
         $this->client = Client::factory()->create()->toArray();
     }
 
-    private function getPayload(array $body = []): array
+    private function getPayloadOrder(array $body = []): array
     {
         return array_merge(
             [
-                'id' => $this->client['id'],
+                'id' => 2,
+                'client_code' => $this->order['client_code'],
+                'product_code' => $this->order['product_code'],
+            ],
+            $body
+        );
+    }
+    private function getPayloadClient(array $body = []): array
+    {
+        return array_merge(
+            [
+                'id_client' => 1,
                 'name' => $this->client['name'],
                 'email' => $this->client['email'],
                 'phone' => $this->client['phone'],
@@ -57,15 +65,18 @@ class ClientControllerTest extends TestCase
 
     public function testStore()
     {
-        $dataClient = $this->dataClient->make()->toArray();
-        $response = $this->post($this->route . 'create', $dataClient);
+        $this->prepareEnvironment();
+        $dataOrder = $this->getPayloadOrder();
+        $dataClient = $this->getPayloadClient();
+        $data = array_merge($dataOrder, $dataClient);
+        $response = $this->post($this->route . 'create', $data);
         $response->assertStatus(Response::HTTP_CREATED);
     }
 
     public function testUpdate()
     {
-        $this->prepareEnvironment();
-        $data = $this->getPayload();
+        $this->order = Order::factory()->make()->toArray();
+        $data = $this->getPayloadOrder();
         $response = $this->put($this->route . 'update/' . $data['id'], $data);
         $response->assertStatus(Response::HTTP_NO_CONTENT);
     }
@@ -73,7 +84,7 @@ class ClientControllerTest extends TestCase
     public function testDestroy()
     {
         $this->prepareEnvironment();
-        $data = $this->getPayload();
+        $data = $this->getPayloadOrder();
         $response = $this->delete($this->route . 'delete/' . $data['id']);
         $response->assertStatus(Response::HTTP_NO_CONTENT);
     }
