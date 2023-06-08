@@ -18,6 +18,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @OA\Property(property="product_code", type="integer", description="product code")
  * )
  * Class Order
+ * @method static find(int $id)
  */
 
 class Order extends Model

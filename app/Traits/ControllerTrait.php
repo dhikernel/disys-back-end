@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace App\Traits;
 
-use App\Domain\Client\Exceptions\CustomException;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Response;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -15,11 +16,19 @@ trait ControllerTrait
      *
      * @param Request $request
      *
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse
      */
     public function index(Request $request)
     {
-        return $this->repository->index($request->all());
+        try {
+            if (!empty($this->repository)) {
+                return response()->json([$this->repository->index($request->all())])
+                    ->setStatusCode(Response::HTTP_OK, Response::$statusTexts[Response::HTTP_OK]);
+            }
+        } catch (\Exception $exception) {
+            return response()->json($exception->getMessage())
+                ->setStatusCode(Response::HTTP_NOT_FOUND, Response::$statusTexts[Response::HTTP_NOT_FOUND]);
+        }
     }
 
     /**
@@ -27,22 +36,25 @@ trait ControllerTrait
      *
      * @param Request $request
      *
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse
      */
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), $this->validators);
-
         if ($validator->fails()) {
-            return $validator->errors();
+            return response()->json([$validator->errors()])
+                ->setStatusCode(Response::HTTP_BAD_REQUEST, Response::$statusTexts[Response::HTTP_BAD_REQUEST]);
         }
 
         try {
-            $returnInsert = $this->repository->store($request->all());
-
-            return $returnInsert;
-        } catch (CustomException $exception) {
-            return $exception->getMessage();
+            if (!empty($this->repository)) {
+                $returnInsert = $this->repository->store($request->all());
+                return response()->json([$returnInsert])
+                    ->setStatusCode(Response::HTTP_CREATED, Response::$statusTexts[Response::HTTP_CREATED]);
+            }
+        } catch (\Exception $exception) {
+            return response()->json($exception->getMessage())
+                ->setStatusCode(Response::HTTP_NOT_FOUND, Response::$statusTexts[Response::HTTP_NOT_FOUND]);
         }
     }
 
@@ -51,16 +63,19 @@ trait ControllerTrait
      *
      * @param int $id
      *
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse
      */
     public function show(int $id)
     {
         try {
-            $returnShow = $this->repository->getById($id);
-
-            return $returnShow;
+            if (!empty($this->repository)) {
+                $returnShow = $this->repository->getById($id);
+            }
+            return response()->json([$returnShow])
+                ->setStatusCode(Response::HTTP_NO_CONTENT, Response::$statusTexts[Response::HTTP_NO_CONTENT]);
         } catch (\Exception $exception) {
-            return $exception->getMessage();
+            return response()->json($exception->getMessage())
+                ->setStatusCode(Response::HTTP_NOT_FOUND, Response::$statusTexts[Response::HTTP_NOT_FOUND]);
         }
     }
 
@@ -70,21 +85,19 @@ trait ControllerTrait
      * @param Request $request
      * @param int $id
      *
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse
      */
     public function update(Request $request, int $id)
     {
-        $validator = Validator::make($request->all(), $this->validators);
-
-        if ($validator->fails()) {
-            return $validator->errors();
-        }
         try {
-            $returnUpdate = $this->repository->update($request->all(), $id);
-
-            return $returnUpdate;
+            if (!empty($this->repository)) {
+                $returnUpdate = $this->repository->update($request->all(), $id);
+                return response()->json([$returnUpdate])
+                    ->setStatusCode(Response::HTTP_NO_CONTENT, Response::$statusTexts[Response::HTTP_NO_CONTENT]);
+            }
         } catch (\Exception $exception) {
-            return $exception->getMessage();
+            return response()->json($exception->getMessage())
+                ->setStatusCode(Response::HTTP_NOT_FOUND, Response::$statusTexts[Response::HTTP_NOT_FOUND]);
         }
     }
 
@@ -93,16 +106,19 @@ trait ControllerTrait
      *
      * @param int $id
      *
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse
      */
     public function destroy(int $id)
     {
         try {
-            $returnDestroy = $this->repository->destroy($id);
-
-            return $returnDestroy;
+            if (!empty($this->repository)) {
+                $returnDestroy = $this->repository->destroy($id);
+                return response()->json([$returnDestroy])
+                    ->setStatusCode(Response::HTTP_NO_CONTENT, Response::$statusTexts[Response::HTTP_NO_CONTENT]);
+            }
         } catch (\Exception $exception) {
-            return $exception->getMessage();
+            return response()->json($exception->getMessage())
+                ->setStatusCode(Response::HTTP_NOT_FOUND, Response::$statusTexts[Response::HTTP_NOT_FOUND]);
         }
     }
 
@@ -111,7 +127,7 @@ trait ControllerTrait
      *
      * @param int $id
      *
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse
      */
     public function checkDelete(int $id)
     {
@@ -122,7 +138,7 @@ trait ControllerTrait
             false,
             [
                 'count' => $count,
-                'haveRelationship' => ! empty($count),
+                'haveRelationship' => !empty($count),
             ]
         );
     }
@@ -132,14 +148,15 @@ trait ControllerTrait
      *
      * @param int $id
      *
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse
      */
     public function inactive(int $id)
     {
         try {
-            return $this->repository->inactive($id);
+            return responseHTTP(200, 'success', $this->repository->inactive($id));
         } catch (\Exception $exception) {
-            return $exception->getCode()->getMessage();
+            return response()->json($exception->getMessage())
+                ->setStatusCode(Response::HTTP_NOT_FOUND, Response::$statusTexts[Response::HTTP_NOT_FOUND]);
         }
     }
 }

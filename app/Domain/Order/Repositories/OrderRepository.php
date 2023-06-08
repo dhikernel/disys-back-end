@@ -44,6 +44,9 @@ class OrderRepository
         return $resultOrderCollection->resource;
     }
 
+    /**
+     * @throws Exception
+     */
     public function store(array $request)
     {
         try {

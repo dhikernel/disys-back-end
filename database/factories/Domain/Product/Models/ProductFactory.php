@@ -19,7 +19,7 @@ class ProductFactory extends Factory
      *
      * @return array
      */
-    public function definition()
+    public function definition(): array
     {
         return [
             'code' => $this->faker->numberBetween(1, 99),
@@ -28,7 +28,11 @@ class ProductFactory extends Factory
                 'Pastel de carne',
                 'Pastel de queijo',
             ]),
-            'price' => $this->faker->randomFloat(2, 20),
+            'price' => $this->faker->randomElement([
+                '10.90',
+                '11.50',
+                '12.70',
+            ]),
             'photo' => $this->faker->imageUrl(),
         ];
     }

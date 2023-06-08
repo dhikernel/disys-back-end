@@ -3,18 +3,23 @@
 namespace App\Domain\Client\Resources;
 
 use Carbon\Carbon;
+use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class ClientResource extends JsonResource
 {
     /**
+     * @var mixed
+     */
+
+    /**
      * Transform the resource into an array.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  Request  $request
      *
      * @return array
      */
-    public function toArray($request)
+    public function toArray($request): array
     {
         return [
             'client_id' => $this->id,
