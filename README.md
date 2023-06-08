@@ -145,7 +145,7 @@ MAIL_FROM_NAME="${APP_NAME}"
 12.1 run the command in the root directory of the project:
 
 ```shell
-docker composer build --no-cache
+docker compose build --no-cache
 ```
 to build PHP, Nginx and Mysql images
 
