@@ -33,7 +33,7 @@ class OrderControllerTest extends TestCase
     {
         return array_merge(
             [
-                'id' => 2,
+                'id' => 7,
                 'client_code' => $this->order['client_code'],
                 'product_code' => $this->order['product_code'],
             ],
