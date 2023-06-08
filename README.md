@@ -77,6 +77,8 @@ git clone git@github.com:dhikernel/disys-back-end.git
 ```
 2. If you are going to use Docker, install docker, create a virtual host, configure your hosts file, you can do these settings if you are going to use apache as well.
 
+2.1 If you are going to use docker go to step => 12
+
 3.  Install composer
 
 composer install. If you still don't have composer installed, just go to the site:
@@ -90,6 +92,10 @@ cp .env.example .env
 ```
 // Configure environment variables according to your database.
 
+4.1 Generate laravel encryption key
+```shell
+php artisan key:generate
+```
 
 5. Migrate the tables to your database using the command
 
@@ -145,7 +151,7 @@ MAIL_FROM_NAME="${APP_NAME}"
 12.1 run the command in the root directory of the project:
 
 ```shell
-docker compose build --no-cache
+docker composer build --no-cache
 ```
 to build PHP, Nginx and Mysql images
 
