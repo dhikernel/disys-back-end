@@ -1,48 +1,44 @@
 <?php
 
-namespace Tests\Feature\Client\Controllers;
+namespace Tests\Feature\Product\Controllers;
 
-use App\Domain\Client\Models\Client;
+use App\Domain\Product\Models\Product;
 use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Tests\TestCase;
 use Symfony\Component\HttpFoundation\Response;
 
-class ClientControllerTest extends TestCase
+class ProductControllerTest extends TestCase
 {
     protected $repository;
 
-    protected $dataClient;
+    protected $dataProduct;
 
     use WithoutMiddleware;
 
-    protected $client;
+    protected $product;
 
     public function setUp(): void
     {
         parent::setUp();
         $this->withoutMiddleware();
-        $this->route       = '/api/clients/';
-        $this->dataClient = Client::factory();
+        $this->route       = '/api/products/';
+        $this->dataProduct = Product::factory();
     }
 
     private function prepareEnvironment(): void
     {
-        $this->client = Client::factory()->create()->toArray();
+        $this->product = Product::factory()->create()->toArray();
     }
 
     private function getPayload(array $body = []): array
     {
         return array_merge(
             [
-                'id' => $this->client['id'],
-                'name' => $this->client['name'],
-                'email' => $this->client['email'],
-                'phone' => $this->client['phone'],
-                'birth_date' => $this->client['birth_date'],
-                'address' => $this->client['address'],
-                'complement' => $this->client['complement'],
-                'neighborhood' => $this->client['neighborhood'],
-                'zip_code' => $this->client['zip_code'],
+                'id' => $this->product['id'],
+                'code' => $this->product['code'],
+                'name' => $this->product['name'],
+                'price' => $this->product['price'],
+                'photo' => $this->product['photo'],
             ],
             $body
         );
@@ -55,8 +51,8 @@ class ClientControllerTest extends TestCase
 
     public function testStore()
     {
-        $dataClient = $this->dataClient->make()->toArray();
-        $response = $this->post($this->route . 'create', $dataClient);
+        $dataProduct = $this->dataProduct->make()->toArray();
+        $response = $this->post($this->route . 'create', $dataProduct);
         $response->assertStatus(Response::HTTP_CREATED);
     }
 
