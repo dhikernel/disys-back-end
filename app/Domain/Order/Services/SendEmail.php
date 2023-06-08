@@ -18,7 +18,7 @@ class SendEmail
             Mail::to($clientData['client']['email'], $clientData['client']['name'])
                 ->cc($clientData['client']['email'])->send($sendMail);
             if (count(Mail::failures()) > 0) {
-                Log::error('Failed to send accounting email recipientes');
+                Log::error('Failed to send accounting email recipients');
                 throw new CustomException('Failed to send accounting email');
             }
         } catch (CustomException $e) {

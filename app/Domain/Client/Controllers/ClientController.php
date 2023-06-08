@@ -8,7 +8,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 class ClientController extends Controller
 {
-    protected $repository;
+    protected ClientRepository $repository;
 
     protected array $validators = [
         'name' => 'required|string|max:255',

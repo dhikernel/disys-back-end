@@ -6,7 +6,6 @@ namespace App\Domain\Client\Repositories;
 
 use App\Domain\Client\Models\Client;
 use App\Domain\Client\Resources\ClientCollection;
-use Exception;
 use Illuminate\Support\Facades\DB;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\QueryBuilder;
@@ -38,6 +37,9 @@ class ClientRepository
         return $returnClientCollection->resource;
     }
 
+    /**
+     * @throws Exception
+     */
     public function store(array $request): Client
     {
         try {
@@ -48,7 +50,7 @@ class ClientRepository
             DB::commit();
         } catch (\Exception $exception) {
             DB::rollback();
-            throw new Exception($exception->getMessage());
+            throw new \Exception($exception->getMessage());
         }
 
         return $createdClient;

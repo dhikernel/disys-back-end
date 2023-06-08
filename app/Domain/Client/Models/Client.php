@@ -22,6 +22,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @OA\Property(property="zip_code", type="string", description="client zip_code"),
  * )
  * Class Client
+ * @method static find(int $id)
  */
 
 class Client extends Model
