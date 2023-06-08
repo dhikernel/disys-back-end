@@ -5,14 +5,16 @@ declare(strict_types=1);
 namespace App\Domain\Order\Repositories;
 
 use App\Domain\Client\Models\Client;
+use App\Domain\Order\Exceptions\CustomException;
 use App\Domain\Order\Models\Order;
 use App\Domain\Order\Resources\OrderCollection;
 use App\Domain\Order\Services\SendEmail;
 use App\Domain\Order\Support\OrderRelationships;
-use Exception;
+use Illuminate\Http\Response as HttpResponse;
 use Illuminate\Support\Facades\DB;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\QueryBuilder;
+use Exception;
 
 /**
  * @property OrderRelationships $orderRelationships
@@ -54,13 +56,15 @@ class OrderRepository
 
             $createdClient = Order::create($request);
 
-            $loadClients = Order::where('id', $request['client_code'])->first();
+            $loadClients = Client::where('id', $request['client_code'])->first();
 
-            $client = null;
+            if (!$loadClients) {
+                throw new CustomException('Client code not found', HttpResponse::HTTP_NOT_FOUND);
+            }
 
             if ($loadClients) {
 
-                $client = $loadClients->load([
+                $client = $createdClient->load([
                     'client' => function ($query) {
                         $query->select(['id', 'name', 'email', 'phone', 'birth_date', 'address', 'complement', 'neighborhood', 'zip_code']);
                     },
